@@ -1,9 +1,8 @@
 package com.test.netty.c1;
 
 import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
 import java.nio.charset.StandardCharsets;
-import static com.test.netty.c1.ByteBufferUtil.debugAll;
+import static com.test.netty.ByteBufferUtil.debugAll;
 
 public class TestByteBufferString {
     public static void main(String[] args) {
