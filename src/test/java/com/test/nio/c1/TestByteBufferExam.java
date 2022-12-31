@@ -1,7 +1,7 @@
-package com.test.netty.c1;
+package com.test.nio.c1;
 
 import java.nio.ByteBuffer;
-import static com.test.netty.ByteBufferUtil.debugAll;
+import static com.test.nio.ByteBufferUtil.debugAll;
 
 public class TestByteBufferExam {
     public static void main(String[] args) {

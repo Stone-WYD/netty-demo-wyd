@@ -1,4 +1,4 @@
-package com.test.netty.c4;
+package com.test.nio.c4;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -7,8 +7,8 @@ import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.*;
 
-import static com.test.netty.ByteBufferUtil.debugAll;
-import static com.test.netty.ByteBufferUtil.debugRead;
+import static com.test.nio.ByteBufferUtil.debugAll;
+
 import java.util.Iterator;
 
 @Slf4j
