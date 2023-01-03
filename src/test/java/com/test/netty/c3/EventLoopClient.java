@@ -16,7 +16,7 @@ import java.nio.charset.Charset;
 @Slf4j
 public class EventLoopClient {
     public static void main(String[] args) throws InterruptedException {
-        Channel channel = new Bootstrap()
+        ChannelFuture channelFuture = new Bootstrap()
                 .group(new NioEventLoopGroup())
                 .channel(NioSocketChannel.class)
                 .handler(new ChannelInitializer<NioSocketChannel>() {
@@ -25,10 +25,24 @@ public class EventLoopClient {
                         ch.pipeline().addLast(new StringEncoder());
                     }
                 })
-                .connect(new InetSocketAddress("localhost", 8080))
-                .sync()
-                .channel();
-        System.out.println("abc");
+                .connect(new InetSocketAddress("localhost", 8080));
+        //前半部分，连接建立前的操作（将建立连接的操作交给了其他线程）
+
+        // 2.1 使用 sync 方法同步处理
+        /*channelFuture.sync();
+        Channel channel = channelFuture.channel();
+        log.debug("{}",channel);
+        channel.writeAndFlush("Hello,World!");*/
+
+        // 2.2 交给其他线程处理，异步处理
+        channelFuture.addListener(new ChannelFutureListener() {
+            @Override
+            public void operationComplete(ChannelFuture channelFuture) throws Exception {
+                Channel channel = channelFuture.channel();
+                log.debug("{}",channel);
+                channel.writeAndFlush("Hello,World!");
+            }
+        });
 
     }
 }
