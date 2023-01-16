@@ -7,58 +7,55 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Arrays;
+import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
-public class Client2 {
+public class Client3 {
 
-    static final Logger log = LoggerFactory.getLogger(Client2.class);
+    static final Logger log = LoggerFactory.getLogger(Client3.class);
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         send();
-        System.out.println("finish.");
+        System.out.println("finish");
     }
 
-    public static byte[] fill10Bytes(char c,int len){
-        byte[] bytes = new byte[10];
-        Arrays.fill(bytes,(byte) '-');
+    public static StringBuilder makeString(char c ,int len){
+        StringBuilder sb = new StringBuilder(len + 2);
         for (int i = 0; i < len; i++) {
-            bytes[i] = (byte) c;
+            sb.append(c);
         }
-        System.out.println(new String(bytes));
-        return bytes;
+        sb.append("\n");
+        return sb;
     }
 
-    private static void send() throws InterruptedException {
+    private static void send(){
         NioEventLoopGroup worker = new NioEventLoopGroup();
         try {
             Bootstrap bootstrap = new Bootstrap()
                     .channel(NioSocketChannel.class)
                     .group(worker)
-                    .handler(new ChannelInitializer<SocketChannel>() {
+                    .handler(new ChannelInitializer<NioSocketChannel>() {
                         @Override
-                        protected void initChannel(SocketChannel channel) throws Exception {
+                        protected void initChannel(NioSocketChannel channel) throws Exception {
                             channel.pipeline().addLast(new LoggingHandler(LogLevel.DEBUG));
                             channel.pipeline().addLast(new ChannelInboundHandlerAdapter(){
+                                // 会在连接建立后触发
                                 @Override
                                 public void channelActive(ChannelHandlerContext ctx) throws Exception {
                                     ByteBuf buf = ctx.alloc().buffer();
                                     char c = '0';
                                     Random r = new Random();
-                                    //定长
                                     for (int i = 0; i < 10; i++) {
-                                        byte[] bytes = fill10Bytes(c, r.nextInt(10) + 1);
+                                        StringBuilder sb = makeString(c, r.nextInt(256) + 1);
                                         c++;
-                                        buf.writeBytes(bytes);
+                                        buf.writeBytes(sb.toString().getBytes());
                                     }
-
                                     ctx.writeAndFlush(buf);
                                 }
                             });
@@ -67,11 +64,9 @@ public class Client2 {
             ChannelFuture channelFuture = bootstrap.connect("localhost", 8080).sync();
             channelFuture.channel().closeFuture().sync();
         }catch (Exception e){
-            log.error("client error" , e);
+            log.error("server error", e);
         }finally {
             worker.shutdownGracefully();
         }
-
     }
-
 }
