@@ -18,6 +18,6 @@ public class GroupChatRequestMessage extends Message {
 
     @Override
     public int getMessageType() {
-        return GroupChatRequestMessage;
+        return com.wyd.message.GroupChatRequestMessage;
     }
 }

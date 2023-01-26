@@ -7,17 +7,16 @@ import java.util.Set;
 
 @Data
 @ToString(callSuper = true)
-public class GroupCreateRequestMessage extends Message {
-    private String groupName;
+public class GroupMembersResponseMessage extends Message {
+
     private Set<String> members;
 
-    public GroupCreateRequestMessage(String groupName, Set<String> members) {
-        this.groupName = groupName;
+    public GroupMembersResponseMessage(Set<String> members) {
         this.members = members;
     }
 
     @Override
     public int getMessageType() {
-        return GroupCreateRequestMessage;
+        return com.wyd.message.GroupMembersResponseMessage;
     }
 }

@@ -5,22 +5,20 @@ import lombok.ToString;
 
 @Data
 @ToString(callSuper = true)
-public class ChatResponseMessage extends AbstractResponseMessage {
-
+public class GroupChatResponseMessage extends AbstractResponseMessage {
     private String from;
     private String content;
 
-    public ChatResponseMessage(boolean success, String reason) {
+    public GroupChatResponseMessage(boolean success, String reason) {
         super(success, reason);
     }
 
-    public ChatResponseMessage(String from, String content) {
+    public GroupChatResponseMessage(String from, String content) {
         this.from = from;
         this.content = content;
     }
-
     @Override
     public int getMessageType() {
-        return ChatResponseMessage;
+        return com.wyd.message.GroupChatResponseMessage;
     }
 }
