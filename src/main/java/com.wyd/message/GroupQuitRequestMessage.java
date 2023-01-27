@@ -17,6 +17,6 @@ public class GroupQuitRequestMessage extends Message {
 
     @Override
     public int getMessageType() {
-        return com.wyd.message.GroupQuitRequestMessage;
+        return com.wyd.message.Message.GroupQuitRequestMessage;
     }
 }

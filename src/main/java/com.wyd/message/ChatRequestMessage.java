@@ -21,6 +21,6 @@ public class ChatRequestMessage extends Message {
 
     @Override
     public int getMessageType() {
-        return com.wyd.message.ChatRequestMessage;
+        return com.wyd.message.Message.ChatRequestMessage;
     }
 }

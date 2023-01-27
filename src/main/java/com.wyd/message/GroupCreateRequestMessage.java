@@ -18,6 +18,6 @@ public class GroupCreateRequestMessage extends Message {
 
     @Override
     public int getMessageType() {
-        return com.wyd.message.GroupCreateRequestMessage;
+        return com.wyd.message.Message.GroupCreateRequestMessage;
     }
 }

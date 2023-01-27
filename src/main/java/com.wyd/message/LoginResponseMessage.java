@@ -13,6 +13,6 @@ public class LoginResponseMessage extends AbstractResponseMessage {
 
     @Override
     public int getMessageType() {
-        return com.wyd.message.LoginResponseMessage;
+        return com.wyd.message.Message.LoginResponseMessage;
     }
 }

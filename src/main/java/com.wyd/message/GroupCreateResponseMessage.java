@@ -13,6 +13,6 @@ public class GroupCreateResponseMessage extends AbstractResponseMessage {
 
     @Override
     public int getMessageType() {
-        return com.wyd.message.GroupCreateResponseMessage;
+        return com.wyd.message.Message.GroupCreateResponseMessage;
     }
 }

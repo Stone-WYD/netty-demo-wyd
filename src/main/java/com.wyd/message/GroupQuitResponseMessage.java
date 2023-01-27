@@ -12,6 +12,6 @@ public class GroupQuitResponseMessage extends AbstractResponseMessage {
 
     @Override
     public int getMessageType() {
-        return com.wyd.message.GroupQuitResponseMessage;
+        return com.wyd.message.Message.GroupQuitResponseMessage;
     }
 }

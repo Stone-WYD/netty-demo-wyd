@@ -17,6 +17,6 @@ public class GroupMembersResponseMessage extends Message {
 
     @Override
     public int getMessageType() {
-        return com.wyd.message.GroupMembersResponseMessage;
+        return com.wyd.message.Message.GroupMembersResponseMessage;
     }
 }

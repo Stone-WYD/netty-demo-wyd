@@ -19,6 +19,6 @@ public class LoginRequestMessage extends Message {
 
     @Override
     public int getMessageType() {
-        return com.wyd.message.LoginRequestMessage;
+        return com.wyd.message.Message.LoginRequestMessage;
     }
 }

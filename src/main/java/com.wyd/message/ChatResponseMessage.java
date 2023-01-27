@@ -21,6 +21,6 @@ public class ChatResponseMessage extends AbstractResponseMessage {
 
     @Override
     public int getMessageType() {
-        return com.wyd.message.ChatResponseMessage;
+        return com.wyd.message.Message.ChatResponseMessage;
     }
 }

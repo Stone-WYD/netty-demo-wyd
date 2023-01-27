@@ -19,6 +19,6 @@ public class GroupChatResponseMessage extends AbstractResponseMessage {
     }
     @Override
     public int getMessageType() {
-        return com.wyd.message.GroupChatResponseMessage;
+        return com.wyd.message.Message.GroupChatResponseMessage;
     }
 }

@@ -1,4 +1,4 @@
-package com.wyd.session;
+package com.wyd.server.session;
 
 import io.netty.channel.Channel;
 
