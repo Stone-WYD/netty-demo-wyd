@@ -1,11 +1,10 @@
 package com.wyd.client;
 
-import com.wyd.message.ChatResponseMessage;
-import com.wyd.message.GroupChatResponseMessage;
-import com.wyd.message.GroupCreateResponseMessage;
-import com.wyd.message.GroupJoinResponseMessage;
+import com.wyd.message.*;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.Set;
 
 @Slf4j
 public class ClientResponseMessageHandler {
@@ -40,6 +39,18 @@ public class ClientResponseMessageHandler {
                 System.out.println("收到来自群 " + groupChatResponse.getGroup() + "中群成员" + groupChatResponse.getFrom()  + " 的群聊消息:");
                 System.out.println(groupChatResponse.getContent());
             }else log.error(groupChatResponse.getReason());
+        }
+        // 收到获取群成员消息
+        if (msg instanceof GroupMembersResponseMessage) {
+            GroupMembersResponseMessage membersReponse = (GroupMembersResponseMessage) msg;
+            if (membersReponse.getMembers() != null) {
+                StringBuilder sb = new StringBuilder("群成员为：");
+                membersReponse.getMembers().stream().forEach(s -> sb.append(s).append(","));
+                sb.replace(sb.length()-1,sb.length(),"");
+                System.out.println(sb.toString());
+            }
+
+
         }
     }
 

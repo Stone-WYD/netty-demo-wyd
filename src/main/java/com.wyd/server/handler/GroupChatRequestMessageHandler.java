@@ -7,6 +7,9 @@ import com.wyd.server.session.GroupSessionFactory;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+
+import java.util.Set;
+
 @ChannelHandler.Sharable
 public class GroupChatRequestMessageHandler extends SimpleChannelInboundHandler<GroupChatRequestMessage> {
     @Override
@@ -18,8 +21,14 @@ public class GroupChatRequestMessageHandler extends SimpleChannelInboundHandler<
 
         GroupSession groupSession = GroupSessionFactory.getGroupSession();
 
-        groupSession.getMembersChannel(groupName).stream().forEach(channel ->
-                channel.writeAndFlush(new GroupChatResponseMessage(groupName,from,content)));
+        Set<String> members = groupSession.getMembers(groupName);
+        if (members.contains(from)) {
+            groupSession.getMembersChannel(groupName).stream().forEach(channel ->
+                    channel.writeAndFlush(new GroupChatResponseMessage(groupName,from,content)));
+        }else ctx.writeAndFlush(new GroupChatResponseMessage(false,"您已不在群中。"));
+
+
+
 
     }
 }
