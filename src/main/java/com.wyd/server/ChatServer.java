@@ -19,7 +19,7 @@ public class ChatServer {
 
     public static void main(String[] args) {
         NioEventLoopGroup boss = new NioEventLoopGroup();
-        NioEventLoopGroup worker = new NioEventLoopGroup();
+        NioEventLoopGroup worker = new NioEventLoopGroup(2);
 
         LoggingHandler LOGGING_HANDLER = new LoggingHandler();
         MessageCodecSharable MESSAGE_CODEC = new MessageCodecSharable();

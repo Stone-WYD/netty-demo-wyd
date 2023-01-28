@@ -7,6 +7,7 @@ import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.handler.timeout.IdleStateHandler;
@@ -26,6 +27,7 @@ public class ChatClient {
 
         NioEventLoopGroup group = new NioEventLoopGroup();
         MessageCodecSharable MESSAGE_CODEC = new MessageCodecSharable();
+        LoggingHandler LOGGING_HANDLER = new LoggingHandler();
 
         AtomicBoolean LOGIN = new AtomicBoolean(false);
         AtomicBoolean EXIT = new AtomicBoolean(false);
@@ -44,9 +46,10 @@ public class ChatClient {
                         protected void initChannel(NioSocketChannel ch) throws Exception {
                             // 避免粘包半包
                             ch.pipeline().addLast(new ProcotolFrameDecoder());
-
                             // 解析消息内容
                             ch.pipeline().addLast(MESSAGE_CODEC);
+
+                            //ch.pipeline().addLast(LOGGING_HANDLER);
 
                             // 用来判断是不是 读或者写空闲时间过长
                             // 3s 内如果没有向服务器写数据，会触发一个IdeState#WRITER_IDIE 事件
@@ -60,7 +63,7 @@ public class ChatClient {
                                     IdleStateEvent event = (IdleStateEvent) evt;
                                     if (IdleState.WRITER_IDLE == event.state()){
                                         //发送一个心跳包
-                                        log.debug("3s 没写数据了，发送一个心跳包...");
+                                        //log.debug("3s 没写数据了，发送一个心跳包...");
                                         ctx.writeAndFlush(new PingMessage());
                                     }
                                 }
@@ -173,7 +176,7 @@ public class ChatClient {
 
                                 @Override
                                 public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-                                    log.debug("连接已经断开，按任意键推出...{}", cause.getCause());
+                                    log.debug("连接因异常已经断开，按任意键推出...{}", cause.getCause());
                                     EXIT.set(true);
                                 }
                             });

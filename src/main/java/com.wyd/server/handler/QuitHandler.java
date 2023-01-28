@@ -1,10 +1,11 @@
 package com.wyd.server.handler;
 
 import com.wyd.server.session.SessionFactory;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import lombok.extern.slf4j.Slf4j;
-
+@ChannelHandler.Sharable
 @Slf4j
 public class QuitHandler extends ChannelInboundHandlerAdapter {
 

@@ -40,7 +40,7 @@ public class MessageCodecSharable extends MessageToMessageCodec<ByteBuf, Message
         byte[] bytes = bos.toByteArray();
         // 7. 长度
         out.writeInt(bytes.length);
-        log.debug("编码方法，内容长度：{}",bytes.length);
+        //log.debug("编码方法，内容长度：{}",bytes.length);
         // 8. 写如内容
         out.writeBytes(bytes);
 
@@ -63,8 +63,8 @@ public class MessageCodecSharable extends MessageToMessageCodec<ByteBuf, Message
         ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
         ObjectInputStream ois = new ObjectInputStream(bis);
         Message message = (Message) ois.readObject();
-        log.debug("{},{},{},{},{},{}",magicNum,version,serializerType,messageType,sequenceId,length);
-        log.debug("{}",message);
+        //log.debug("{},{},{},{},{},{}",magicNum,version,serializerType,messageType,sequenceId,length);
+        //log.debug("{}",message);
 
         out.add(message);
     }

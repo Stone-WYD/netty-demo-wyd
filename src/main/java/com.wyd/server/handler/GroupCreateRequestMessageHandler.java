@@ -6,11 +6,12 @@ import com.wyd.message.GroupCreateResponseMessage;
 import com.wyd.server.session.Group;
 import com.wyd.server.session.GroupSession;
 import com.wyd.server.session.GroupSessionFactory;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
 import java.util.Set;
-
+@ChannelHandler.Sharable
 public class GroupCreateRequestMessageHandler extends SimpleChannelInboundHandler<GroupCreateRequestMessage> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, GroupCreateRequestMessage message) throws Exception {
@@ -24,9 +25,11 @@ public class GroupCreateRequestMessageHandler extends SimpleChannelInboundHandle
             ctx.writeAndFlush(new GroupCreateResponseMessage(true,   groupName + "创建成功！" ));
             // 给群成员发送消息
             groupSession.getMembersChannel(groupName).stream().forEach(
-                    channel -> channel.writeAndFlush(
-                            new GroupCreateResponseMessage(true, "您已被拉入" + groupName)
-                    ));
+                    channel -> {
+                        channel.writeAndFlush(
+                                new GroupCreateResponseMessage(true, "您已被拉入" + groupName)
+                        );
+                    });
         }else
             ctx.writeAndFlush(new GroupCreateResponseMessage( false, "群名已存在，创建失败！"));
     }

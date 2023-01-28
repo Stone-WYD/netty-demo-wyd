@@ -15,6 +15,7 @@ public class ChatResponseMessage extends AbstractResponseMessage {
     }
 
     public ChatResponseMessage(String from, String content) {
+        setSuccess(true);
         this.from = from;
         this.content = content;
     }
