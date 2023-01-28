@@ -6,6 +6,8 @@ import lombok.ToString;
 @Data
 @ToString(callSuper = true)
 public class GroupChatResponseMessage extends AbstractResponseMessage {
+
+    private String group;
     private String from;
     private String content;
 
@@ -13,7 +15,8 @@ public class GroupChatResponseMessage extends AbstractResponseMessage {
         super(success, reason);
     }
 
-    public GroupChatResponseMessage(String from, String content) {
+    public GroupChatResponseMessage(String group, String from, String content) {
+        this.group = group;
         this.from = from;
         this.content = content;
     }
