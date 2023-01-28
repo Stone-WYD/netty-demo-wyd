@@ -158,24 +158,8 @@ public class ChatClient {
                                         //唤醒 system in 线程
                                         WAIT_FOR_LOGIN.countDown();
                                     }
-                                    // 如果消息是其他类型 此处只简单对聊天消息进行处理并展示
-                                    // 收到单聊消息
-                                    if (msg instanceof ChatResponseMessage) {
-                                        ChatResponseMessage chatResponse = (ChatResponseMessage) msg;
-                                        if (chatResponse.isSuccess()){
-                                            System.out.println("收到来自 " + chatResponse.getFrom() + " 的单聊消息:");
-                                            System.out.println(chatResponse.getContent());
-                                        }else log.error(chatResponse.getReason());
-
-                                    }
-                                    // 收到群聊消息
-                                    if (msg instanceof GroupChatResponseMessage) {
-                                        GroupChatResponseMessage groupChatResponse = (GroupChatResponseMessage) msg;
-                                        if (groupChatResponse.isSuccess()) {
-                                            System.out.println("收到来自群 " + groupChatResponse.getGroup() + "中群成员" + groupChatResponse.getFrom()  + " 的群聊消息:");
-                                            System.out.println(groupChatResponse.getContent());
-                                        }else log.error(groupChatResponse.getReason());
-                                    }
+                                    // 如果消息是其他类型
+                                    ClientResponseMessageHandler.clientResponseMessageHandler(ctx, msg);
                                 }
 
                                 // 在连接断开时触发
