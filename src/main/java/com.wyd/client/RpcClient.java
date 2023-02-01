@@ -43,7 +43,7 @@ public class RpcClient {
                     new Class[]{String.class},
                     new Object[]{"张三"}
             )).addListener(promise -> {
-                if (promise.isSuccess()) {
+                if (!promise.isSuccess()) {
                     Throwable cause = promise.cause();
                     log.error("error", cause);
                 }
