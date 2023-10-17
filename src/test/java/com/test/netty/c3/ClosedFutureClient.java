@@ -29,6 +29,8 @@ public class ClosedFutureClient {
                 .connect(new InetSocketAddress("localhost", 8080));
         Channel channel = channelFuture.sync().channel();
         log.debug("{}",channel);
+
+        // 给服务器发送信息，连接一直保持着
         new Thread(()->{
             Scanner scanner = new Scanner(System.in);
             while (true){
@@ -40,6 +42,8 @@ public class ClosedFutureClient {
                 channel.writeAndFlush(line);
             }
         },"input").start();
+
+        // 关闭连接
         ChannelFuture closeFuture = channel.closeFuture();
         closeFuture.addListener((ChannelFutureListener) channelFuture1 -> {
             log.debug("处理关闭之后的操作");
