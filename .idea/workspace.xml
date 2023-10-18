@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3865be0b-d79c-4c82-8ae6-39260059c44d" name="更改" comment="增加netty内容">
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/test/netty/wyd/NettyClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/test/netty/wyd/NettyClientHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/test/netty/wyd/NettyServerHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/test/netty/wyd/NettyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/test/netty/wyd/NettyServer.java" afterDir="false" />
+    <list default="true" id="3865be0b-d79c-4c82-8ae6-39260059c44d" name="更改" comment="Rpc原理和实现 netty 相关">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/test/advance/c2/TestHttp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/test/advance/c2/TestHttp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/test/advance/c2/TestMessageCodec.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/test/advance/c2/TestMessageCodec.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,26 +73,13 @@
       <recent name="com.test.aio" />
     </key>
   </component>
-  <component name="RunManager" selected="应用程序.NettyClient">
+  <component name="RunManager" selected="应用程序.TestHttp">
     <configuration name="Client" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.test.aio.Client" />
       <module name="netty-demo-wyd" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.test.aio.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MyClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.test.nio.wyd.MyClient" />
-      <module name="netty-demo-wyd" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.test.nio.wyd.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -140,13 +126,26 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TestHttp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.test.advance.c2.TestHttp" />
+      <module name="netty-demo-wyd" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.test.advance.c2.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="应用程序.TestHttp" />
         <item itemvalue="应用程序.NettyClient" />
         <item itemvalue="应用程序.NettyServer" />
         <item itemvalue="应用程序.Client" />
         <item itemvalue="应用程序.Server" />
-        <item itemvalue="应用程序.MyClient" />
       </list>
     </recent_temporary>
   </component>
@@ -162,7 +161,7 @@
       <workItem from="1690421967615" duration="7502000" />
       <workItem from="1690438343155" duration="252000" />
       <workItem from="1697424829068" duration="8828000" />
-      <workItem from="1697506749573" duration="16818000" />
+      <workItem from="1697506749573" duration="22353000" />
     </task>
     <task id="LOCAL-00001" summary="gitignore, nio 学习 reactor 模型内容">
       <created>1697507970490</created>
@@ -192,7 +191,14 @@
       <option name="project" value="LOCAL" />
       <updated>1697538483367</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Rpc原理和实现 netty 相关">
+      <created>1697599174795</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1697599174795</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -203,6 +209,7 @@
     <MESSAGE value="fix" />
     <MESSAGE value="aio" />
     <MESSAGE value="增加netty内容" />
-    <option name="LAST_COMMIT_MESSAGE" value="增加netty内容" />
+    <MESSAGE value="Rpc原理和实现 netty 相关" />
+    <option name="LAST_COMMIT_MESSAGE" value="Rpc原理和实现 netty 相关" />
   </component>
 </project>

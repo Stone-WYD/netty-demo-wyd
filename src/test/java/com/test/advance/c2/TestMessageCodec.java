@@ -14,7 +14,7 @@ public class TestMessageCodec {
     public static void main(String[] args) throws Exception {
         EmbeddedChannel channel = new EmbeddedChannel(
                 new LoggingHandler(),
-                //                                一个包的最大字节数，   长度字段在包中位置，  长度字段长度，      长度字段距离内容的偏移量，是否剥离内容外的其他内容
+                //                                一个包的最大字节数，   长度字段在包中位置，  长度字段长度，      长度字段距离内容的偏移量，是否剥离内容外的其他内容(一般指剥离存储长度的数据)
                 new LengthFieldBasedFrameDecoder(1024, 12, 4, 0, 0),
                 new MessageCodec()
         );

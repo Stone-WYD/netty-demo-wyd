@@ -17,7 +17,15 @@ import java.util.List;
 @Slf4j
 public class TestHttp {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
+        new Thread(() -> start(2222)).start();
+        new Thread(() -> start(3333)).start();
+
+        // 如果主线程结束，那么进程就结束了
+        Thread.sleep(1000000);
+    }
+
+    public static void start(Integer port){
         NioEventLoopGroup boss = new NioEventLoopGroup();
         NioEventLoopGroup worker = new NioEventLoopGroup();
         try{
@@ -36,7 +44,7 @@ public class TestHttp {
                                     QueryStringDecoder decoder = new QueryStringDecoder(msg.uri());
 
                                     DefaultFullHttpResponse response = new DefaultFullHttpResponse(msg.protocolVersion(), HttpResponseStatus.OK);
-                                    byte[] bytes = ("<h1>hello,world!" + "</h1>").getBytes();
+                                    byte[] bytes = ("<h1>hello,world!  port:" + port + "</h1>").getBytes();
                                     response.headers().set(HttpHeaderNames.CONTENT_TYPE, "text/html");
                                     response.headers().setInt(HttpHeaderNames.CONTENT_LENGTH, bytes.length);
                                     response.content().writeBytes(bytes);
@@ -45,7 +53,7 @@ public class TestHttp {
                             });
                         }
                     });
-            ChannelFuture channelFuture = bootstrap.bind(8080).sync();
+            ChannelFuture channelFuture = bootstrap.bind(port).sync();
             channelFuture.channel().closeFuture().sync();
         }catch ( Exception e){
             log.error("Server error:" , e);
