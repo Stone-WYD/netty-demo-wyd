@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3865be0b-d79c-4c82-8ae6-39260059c44d" name="更改" comment="aio">
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/test/aio/Client.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/test/aio/Server.java" afterDir="false" />
+    <list default="true" id="3865be0b-d79c-4c82-8ae6-39260059c44d" name="更改" comment="增加netty内容">
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/test/netty/wyd/NettyClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/test/netty/wyd/NettyClientHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/test/netty/wyd/NettyServerHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/test/netty/wyd/NettyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/test/netty/wyd/NettyServer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +38,9 @@
     </option>
   </component>
   <component name="ProjectId" id="2T6AWGL9SwzWPgFR6uHCIz1yIz3" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
@@ -59,6 +64,9 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.test.netty.wyd" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\wyd\MyStudy\netty-demo-wyd" />
     </key>
@@ -66,7 +74,7 @@
       <recent name="com.test.aio" />
     </key>
   </component>
-  <component name="RunManager" selected="应用程序.Client">
+  <component name="RunManager" selected="应用程序.NettyClient">
     <configuration name="Client" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.test.aio.Client" />
       <module name="netty-demo-wyd" />
@@ -93,12 +101,25 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MyServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.test.nio.wyd.MyServer" />
+    <configuration name="NettyClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.test.netty.wyd.NettyClient" />
       <module name="netty-demo-wyd" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.test.nio.wyd.*" />
+          <option name="PATTERN" value="com.test.netty.wyd.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="NettyServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.test.netty.wyd.NettyServer" />
+      <module name="netty-demo-wyd" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.test.netty.wyd.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -119,26 +140,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestCompositeByteBuf" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.test.netty.c4.TestCompositeByteBuf" />
-      <module name="netty-demo-wyd" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.test.netty.c4.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="应用程序.NettyClient" />
+        <item itemvalue="应用程序.NettyServer" />
         <item itemvalue="应用程序.Client" />
         <item itemvalue="应用程序.Server" />
         <item itemvalue="应用程序.MyClient" />
-        <item itemvalue="应用程序.MyServer" />
-        <item itemvalue="应用程序.TestCompositeByteBuf" />
       </list>
     </recent_temporary>
   </component>
@@ -154,7 +162,7 @@
       <workItem from="1690421967615" duration="7502000" />
       <workItem from="1690438343155" duration="252000" />
       <workItem from="1697424829068" duration="8828000" />
-      <workItem from="1697506749573" duration="4067000" />
+      <workItem from="1697506749573" duration="16818000" />
     </task>
     <task id="LOCAL-00001" summary="gitignore, nio 学习 reactor 模型内容">
       <created>1697507970490</created>
@@ -177,7 +185,14 @@
       <option name="project" value="LOCAL" />
       <updated>1697523532996</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="增加netty内容">
+      <created>1697538483367</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1697538483367</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -187,6 +202,7 @@
     <MESSAGE value="gitignore, nio 学习 reactor 模型内容" />
     <MESSAGE value="fix" />
     <MESSAGE value="aio" />
-    <option name="LAST_COMMIT_MESSAGE" value="aio" />
+    <MESSAGE value="增加netty内容" />
+    <option name="LAST_COMMIT_MESSAGE" value="增加netty内容" />
   </component>
 </project>
