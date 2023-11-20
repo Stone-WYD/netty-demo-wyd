@@ -59,8 +59,9 @@ public class TestPipeline {
                                 //读完数据开始写
                                 /*channel的writeAndFlush方法，从tail往前找写的handler
                                  channel.writeAndFlush(ctx.alloc().buffer().writeBytes("server...".getBytes(StandardCharsets.UTF_8)));*/
+                                channel.writeAndFlush(ctx.alloc().buffer().writeBytes("server...".getBytes(StandardCharsets.UTF_8)));
                                 //ctx的writeAndFlush方法，从当前read handler往前找写handler
-                                ctx.writeAndFlush(ctx.alloc().buffer().writeBytes("server...".getBytes(StandardCharsets.UTF_8)));
+                                // ctx.writeAndFlush(ctx.alloc().buffer().writeBytes("server...".getBytes(StandardCharsets.UTF_8)));
 
                                 //super.channelRead(ctx, msg); 没有下一个读handler，可以省去
                             }
