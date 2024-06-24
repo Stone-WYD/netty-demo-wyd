@@ -23,7 +23,9 @@ public class Test {
 
     public static ProtoTest2.Student createStudent() {
         ProtoTest2.Student.Builder builder = ProtoTest2.Student.newBuilder();
-        builder.setName(ByteString.copyFromUtf8("小明"));
+        // 当项目编码为 GBK 时，需要这样设置
+        String xm = new String("小明".getBytes(), Charsets.UTF_8);
+        builder.setName(ByteString.copyFromUtf8(xm));
         builder.setAge(18);
         // 设置学校
         ProtoTest2.School.Builder schoolBuilder = ProtoTest2.School.newBuilder();
