@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option java_package = "com.test.protobuf";
+option java_outer_classname = "ProtoTest2";
+
+message Student{
+  bytes name = 1;
+  int32 age = 2;
+  School school = 3;
+}
+
+message School{
+  string name = 1;
+  uint32 number = 2;
+}
