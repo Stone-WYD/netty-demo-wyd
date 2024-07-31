@@ -16,8 +16,10 @@ import java.nio.charset.StandardCharsets;
 
 @Slf4j
 public class TestPipeline {
-    public static void main(String[] args) {
-        new ServerBootstrap()
+    // 可配合 com.test.netty.c2.HelloClient 使用
+
+    public static void main(String[] args) throws InterruptedException {
+        ChannelFuture channelFuture = new ServerBootstrap()
                 .group(new NioEventLoopGroup())
                 .channel(NioServerSocketChannel.class)
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
@@ -95,6 +97,8 @@ public class TestPipeline {
                     }
                 })
                 .bind(8080);
+
+        channelFuture.channel().closeFuture().sync();
     }
 
     @Data
