@@ -1,7 +1,6 @@
 package com.test.websocket.client;
 
 import com.test.util.ConfigPropertiesUtil;
-import com.test.util.SystemUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -20,15 +19,12 @@ import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import io.netty.handler.stream.ChunkedWriteHandler;
-import io.netty.handler.timeout.IdleState;
-import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.handler.timeout.IdleStateHandler;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.net.ssl.SSLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.concurrent.CountDownLatch;
 
 /**
  * @author xh
@@ -39,32 +35,26 @@ import java.util.concurrent.CountDownLatch;
 public class WebsocketNettyClient {
 
     public static void main(String[] args) throws Exception {
-        WebsocketNettyClient client = new WebsocketNettyClient();
-        client.test();
+        // 获取一个 websocket 连接
+        Channel dest = WebsocketNettyClient.dest();
+        // fixme 这里连接虽然建立了，但 ssl 层还没有处理好，如果接着就发送消息会出现问题，演示用所以直接睡眠了，此处应
+        //  用 synchronized 等方式阻塞等待 ssl 处理好
+        Thread.sleep(3000);
+        // 向连接中发送信息到服务端（如果一段时间不发送，则会触发写空闲事件，发送心跳包）
+        send(dest, "测试一下连接");
+        // 关闭连接
+        dest.close();
+        // 关闭客户端，这里关闭后是无法再获取连接的
+        closeClient();
     }
 
 
-    public void test() throws Exception {
-        Channel dest = dest();
-
-        // closeFuture 方法收到关闭指令后返回 future，关闭后添加一些操作。这里加入的 CLOSE(因为其作用是关闭channel) 是没有意义的
-        // dest.closeFuture().addListener((ChannelFutureListener.CLOSE)).sync();
-        dest.closeFuture().addListener(future -> {
-            log.info("执行到这里了");
-            group.shutdownGracefully();
-            // todo 为何运行到此处后如果不强制关闭程序，程序不会自行结束？
-            // System.exit(1);
-            SystemUtil.showThreadsInfo();
-            Thread.sleep(1000);
-            SystemUtil.showThreadsInfo();
-        });
+    public static Channel dest() throws Exception {
+        ChannelFuture cf = boot.connect(webSocketURL.getHost(), webSocketURL.getPort()).sync();
+        return cf.channel();
     }
 
-    private EventLoopGroup group = new NioEventLoopGroup();
-
-
-    public static void send(Channel channel) {
-        final String textMsg = "握手完成后直接发送的消息";
+    public static void send(Channel channel, String textMsg) {
 
         if (channel != null && channel.isActive()) {
             TextWebSocketFrame frame = new TextWebSocketFrame(textMsg);
@@ -82,10 +72,15 @@ public class WebsocketNettyClient {
         }
     }
 
-
+    public static void closeClient() {
+        group.shutdownGracefully();
+    }
 
     private static URI webSocketURL;
     private static Bootstrap boot;
+    //  一般来说是没有关闭 group 的处理，group 本质上是个线程池，只要有相关功能还需要用，就不应该关闭。如果碰到一些不可控因素如服务器崩溃，
+    //  那么应该靠重启而不是通过代码进行容错。当然，如果有控制管理面板，也可以设置相应开关功能。
+    private static EventLoopGroup group = new NioEventLoopGroup(2);
 
     static {
         try {
@@ -93,9 +88,6 @@ public class WebsocketNettyClient {
             if ("true".equals(ConfigPropertiesUtil.getProperty("netty.websocket.enable"))) {
                 String webSocketUri = ConfigPropertiesUtil.getProperty("netty.websocket.uri");
                 webSocketURL = new URI(webSocketUri);
-                // fixme 没有关闭 group 的处理，group 本质上是个线程池，只要有相关功能还需要用，就不应该关闭。如果碰到一些不可控因素如服务器崩溃，
-                //  那么应该靠重启而不是通过代码进行容错。当然，如果有控制管理面板，也可以设置相应开关功能。
-                EventLoopGroup group = new NioEventLoopGroup();
 
                 // ssl 配置
                 SslContextBuilder sslContextBuilder = SslContextBuilder.forClient();
@@ -126,8 +118,11 @@ public class WebsocketNettyClient {
                                         .newHandshaker(webSocketURL, WebSocketVersion.V13, null, false, new DefaultHttpHeaders())));
                                 // 如果一段时间（单位：秒）没有向服务器写数据，就会触发一个 IdleState#WRITER_IDLE 事件
                                 pipeline.addLast(new IdleStateHandler(0, 1, 0));
+                                // todo 测试问题：netty 中关于 handler 的多线程情况分析
+                                // pipeline.addLast(new WebsocketNettyClientOutHandler());
                                 // 业务处理
-                                pipeline.addLast(new WebsocketNettyClientHandler());
+                                pipeline.addLast(new WebsocketNettyClientInboundHandler());
+
                             }
                         });
             }
@@ -136,9 +131,6 @@ public class WebsocketNettyClient {
         }
     }
 
-    public static Channel dest() throws Exception {
-        ChannelFuture cf = boot.connect(webSocketURL.getHost(), webSocketURL.getPort()).sync();
-        return cf.channel();
-    }
+
 
 }

@@ -14,23 +14,24 @@ import lombok.extern.slf4j.Slf4j;
  * @Description:
  */
 @Slf4j
-public class WebsocketNettyClientHandler  extends SimpleChannelInboundHandler<TextWebSocketFrame> {
+public class WebsocketNettyClientInboundHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
 
     private int times = 0;
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) throws Exception {
-
+        log.info("从服务端获取到消息：{}", msg.text());
     }
 
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
 
-
         if (WebSocketClientProtocolHandler.ClientHandshakeStateEvent.HANDSHAKE_COMPLETE
                 .equals(evt)) {
             // websocket 连接建立完成
             log.info(ctx.channel().id().asShortText() + " websocket连接握手完成！");
+            // todo 测试问题：netty 中关于 handler 的多线程情况分析
+            // ctx.writeAndFlush(true);
         }
 
         if (evt instanceof IdleStateEvent) {
