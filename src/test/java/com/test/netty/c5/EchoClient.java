@@ -30,7 +30,7 @@ public class EchoClient {
                         });
                     }
                 })
-                .connect("localhost", 8888).sync().channel();
+                .connect("localhost", 8080).sync().channel();
 
         new Thread(()->{
             Scanner scanner = new Scanner(System.in);
